@@ -1,3 +1,5 @@
+// COLORES
+
 var Colors = {
   lightviolet: "#555B6E",
   lightblue: "#89B0AE",
@@ -7,6 +9,7 @@ var Colors = {
   pink: "#FFD6BA",
 };
 
+// THREEJS VARIABLES RELACIONADAS
 let scene,
   camera,
   fielOfView,
@@ -17,6 +20,8 @@ let scene,
   WIDTH,
   renderer,
   container;
+
+// INCIA THREE JS, PANTALLA
 
 function createScene() {
   // Tomo el ancho y el alto de la pantalla,
@@ -74,24 +79,58 @@ function createScene() {
   // Escucho a la pantalla: si el usuario modifica el tamaño
   // acutalizamos el tamaño de la camara y el renderer.
   window.addEventListener("resize", handleWindowResize, false);
-
 }
 
-function handleWindowResize(){
-    HEIGHT = window.innerHeight;
-    WIDTH = window.innerWidth;
+// MANEJA LOS EVENTOS DE PANTALLA
 
-    renderer.setSize(WIDTH, HEIGHT);
-    camera.aspect = WIDTH / HEIGHT;
-    camera.updateProjectionMatrix();
+function handleWindowResize() {
+  HEIGHT = window.innerHeight;
+  WIDTH = window.innerWidth;
+
+  renderer.setSize(WIDTH, HEIGHT);
+  camera.aspect = WIDTH / HEIGHT;
+  camera.updateProjectionMatrix();
+}
+
+// LUCES
+
+let hemisphereLight, shadowLight;
+
+function createLights() {
+  /// Una luz hemisferica es luz en degrade;
+  // el primer parametro es la luz del cielo, el segundo parametro es el color del suelo,
+  // el tercer paramentro es la intensidad de la luz
+  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9);
+
+  // Una luz direccional brilla desde una direccion especifica
+  // Actua como el sol, esto significa que todos los rayos son producidos en paralelo.
+  shadowLight = new THREE.DirectionalLight(0xffffff, 0.9);
+
+  // Setea la direccion de la luz
+  shadowLight.position.set(150, 350, 350);
+
+  // Permite la proyeccion de la lus.
+  shadowLight.castShadow = true;
+
+  // define el area visible de la sombra proyectada
+  shadowLight.shadow.camera.left = -400;
+  shadowLight.shadow.camera.right = 400;
+  shadowLight.shadow.camera.top = 400;
+  shadowLight.shadow.camera.bottom = -400;
+  shadowLight.shadow.camera.near = 1;
+  shadowLight.shadow.camera.far = 1000;
+
+  // para activar las luces, hay que agregarlas a la escena
+  scene.add(hemisphereLight);
+  scene.add(shadowLight);
 }
 
 function init() {
   // set up the scene, the camera and the renderer
   createScene();
 
-  //   // add the lights
-  //   createLights();
+  // add the lights
+  createLights();
 
   //   // add the objects
   //   createPlane();
