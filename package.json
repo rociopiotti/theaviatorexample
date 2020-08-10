@@ -1,0 +1,24 @@
+{
+  "name": "theaviatorexample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./js/game.js",
+  "type": "module",
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rociopiotti/theaviatorexample.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rociopiotti/theaviatorexample/issues"
+  },
+  "homepage": "https://github.com/rociopiotti/theaviatorexample#readme",
+  "dependencies": {
+    "three": "^0.119.1"
+  }
+}
