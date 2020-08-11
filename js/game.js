@@ -94,7 +94,7 @@ function handleWindowResize() {
 }
 
 // LIGHTS
-let hemisphereLight, shadowLight;
+let hemisphereLight, shadowLight, ambientLight;
 
 function createLights() {
   // A hemisphere light is a gradient colored light;
@@ -104,7 +104,11 @@ function createLights() {
 
   // A directional light shines from a specific direction.
   // It acts like the sun, that means that all the rays produced are parallel.
-  shadowLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  shadowLight = new THREE.DirectionalLight(0xffffff, 0.5);
+
+// Una luz ambiente agrega un color global y hace las sombras más suaves
+  ambientLight = new THREE.AmbientLight (0xF8FA90,0.3);
+  
 
   // Set the direction of the light
   shadowLight.position.set(150, 350, 350);
@@ -128,6 +132,7 @@ function createLights() {
   // to activate the lights, just add them to the scene
   scene.add(hemisphereLight);
   scene.add(shadowLight);
+  scene.add(ambientLight);
 }
 
 var Pilot = function () {
@@ -391,14 +396,14 @@ let Sea = function () {
   // creo un array para guardar los nuevos datos asociados a cada vetice
   this.waves = [];
 
-  for (let i = 0; i <l; i++) {
+  for (let i = 0; i < l; i++) {
     // Tomo cada vértice.
     let v = geom.vertices[i];
     // guado los datos asociados a el
     this.waves.push({
-      y:v.y,
-      x:v.x,
-      z:v.z,
+      y: v.y,
+      x: v.x,
+      z: v.z,
       // un ángulo random
       ang: Math.random() * Math.PI * 2,
       // una distancia random
