@@ -25,6 +25,26 @@ let scene,
 
 let mousePos = { x: 0, y: 0 };
 
+/// GAME VARIABLES
+var game;
+function resetGame() {
+  game = {
+    speed: 0,
+
+    distance: 0,
+
+    seaRadius: 600,
+    seaLength: 800,
+    //seaRotationSpeed:0.006,
+    wavesMinAmp: 5,
+    wavesMaxAmp: 20,
+    wavesMinSpeed: 0.001,
+    wavesMaxSpeed: 0.003,
+
+    status: "playing",
+  };
+}
+
 function createScene() {
   // Get the width and the height of the screen,
   // use them to set up the aspect ratio of the camera
@@ -524,8 +544,8 @@ function handleMouseMove(event) {
 }
 
 function updatePlane() {
-  let targetY = normalize(mousePos.y,-.75,.75,25, 175);
-  let targetX = normalize(mousePos.x,-.75,.75,-100, 100);
+  let targetY = normalize(mousePos.y, -0.75, 0.75, 25, 175);
+  let targetX = normalize(mousePos.x, -0.75, 0.75, -100, 100);
 
   // Para darle un movimiento más real al avión
   // Muevo el avión en cada cuadro agregando una fracción de la distancia que restante
@@ -557,13 +577,14 @@ function loop() {
 }
 
 function init(event) {
-  document.addEventListener("mousemove", handleMouseMove, false);
+  resetGame();
   createScene();
   createLights();
   createSea();
   createSky();
   createPlane();
   loop();
+  document.addEventListener("mousemove", handleMouseMove, false);
 }
 
 window.addEventListener("load", init, false);
