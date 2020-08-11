@@ -97,26 +97,25 @@ function handleWindowResize() {
 let hemisphereLight, shadowLight, ambientLight;
 
 function createLights() {
-  // A hemisphere light is a gradient colored light;
-  // the first parameter is the sky color, the second parameter is the ground color,
-  // the third parameter is the intensity of the light
+  // Una luz hemisférica es una luz gradiente de colores
+  // El primer parámetro es el color del cielo, el segundo parámetro es el color del suelo
+  // el tercer parámetro es la intensidad de la luz
   hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0xc3c3c3, 0.9);
 
-  // A directional light shines from a specific direction.
-  // It acts like the sun, that means that all the rays produced are parallel.
+  // Una luz direccional brilla desde una dirección específica.
+  // Actua como el sol, eso significa que todos los rayos son paralelos
   shadowLight = new THREE.DirectionalLight(0xffffff, 0.5);
 
-// Una luz ambiente agrega un color global y hace las sombras más suaves
-  ambientLight = new THREE.AmbientLight (0xF8FA90,0.3);
-  
+  // Una luz ambiente agrega un color global y hace las sombras más suaves
+  ambientLight = new THREE.AmbientLight(0xf8fa90, 0.3);
 
-  // Set the direction of the light
+  // Setea la dirección de la luz
   shadowLight.position.set(150, 350, 350);
 
-  // Allow shadow casting
+  // Permite la emición de sombre
   shadowLight.castShadow = true;
 
-  // define the visible area of the projected shadow
+  // Define el área visible de la sombre proyectada
   shadowLight.shadow.camera.left = -400;
   shadowLight.shadow.camera.right = 400;
   shadowLight.shadow.camera.top = 400;
@@ -124,12 +123,12 @@ function createLights() {
   shadowLight.shadow.camera.near = 1;
   shadowLight.shadow.camera.far = 1000;
 
-  // define the resolution of the shadow; the higher the better,
-  // but also the more expensive and less performant
+  // Define la resolucion de la sombra, mientras más alto mejor,
+  // pero también más caro y menos performante
   shadowLight.shadow.mapSize.width = 2048;
   shadowLight.shadow.mapSize.height = 2048;
 
-  // to activate the lights, just add them to the scene
+  // Para activer las luces se deben agregar a la escena
   scene.add(hemisphereLight);
   scene.add(shadowLight);
   scene.add(ambientLight);
@@ -228,7 +227,7 @@ var Pilot = function () {
   this.mesh.add(earR);
 };
 
-// Mueve el pelo (( PREGUNTAR ESTO ))
+// Mueve el pelo
 Pilot.prototype.updateHairs = function () {
   // Agarro el pelo
   let hairs = this.hairsTop.children;
@@ -383,13 +382,13 @@ let Sky = function () {
   }
 };
 
-// First let's define a Sea object :
+// Primero defino el objeto mar:
 let Sea = function () {
-  // create the geometry (shape) of the cylinder;
-  // the parameters are:
+  // creo la geometría del cilindro
+  // los parámetros son:
   // radius top, radius bottom, height, number of segments on the radius, number of segments vertically
   let geom = new THREE.CylinderGeometry(600, 600, 800, 40, 10);
-  // rotate the geometry on the x axis
+  // rotar la geometría del eje x
   geom.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
   // Agarro los vertices
   let l = geom.vertices.length;
@@ -413,7 +412,7 @@ let Sea = function () {
     });
   }
 
-  // create the material
+  // Creo el material
   let mat = new THREE.MeshPhongMaterial({
     color: Colors.bluejean,
     transparent: true,
@@ -421,7 +420,7 @@ let Sea = function () {
     shading: THREE.FlatShading,
   });
 
-  // To create an object in Three.js, we have to create a mesh
+  // Para crear un objeto en Three.js, necesito crear una malla
   // which is a combination of a geometry and some material
   this.mesh = new THREE.Mesh(geom, mat);
 
@@ -525,11 +524,16 @@ function handleMouseMove(event) {
 }
 
 function updatePlane() {
-  let targetX = normalize(mousePos.x, -1, 1, -100, 100);
-  let targetY = normalize(mousePos.y, -1, 1, -25, 175);
+  let targetY = normalize(mousePos.y,-.75,.75,25, 175);
+  let targetX = normalize(mousePos.x,-.75,.75,-100, 100);
 
-  airplane.mesh.position.y = targetY;
-  airplane.mesh.position.x = targetX;
+  // Para darle un movimiento más real al avión
+  // Muevo el avión en cada cuadro agregando una fracción de la distancia que restante
+  airplane.mesh.position.y += (targetY - airplane.mesh.position.y) * 0.1;
+  // Roto el avión proporcionalmente a la distancia que restante
+  airplane.mesh.rotation.z = (targetY - airplane.mesh.position.y) * 0.0128;
+  airplane.mesh.rotation.x = (airplane.mesh.position.y - targetY) * 0.0064;
+
   airplane.propeller.rotation.x += 0.3;
 }
 
