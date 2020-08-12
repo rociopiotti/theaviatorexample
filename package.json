@@ -2,9 +2,8 @@
   "name": "theaviatorexample",
   "version": "1.0.0",
   "description": "",
-  "main": "./js/game.js",
+  "main": ".src/js/game.js",
   "type": "module",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,5 +19,8 @@
   "homepage": "https://github.com/rociopiotti/theaviatorexample#readme",
   "dependencies": {
     "three": "^0.119.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1"
   }
 }
