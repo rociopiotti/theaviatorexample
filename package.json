@@ -2,10 +2,12 @@
   "name": "theaviatorexample",
   "version": "1.0.0",
   "description": "",
-  "main": ".src/js/game.js",
+  "private:": true,
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack src/js/game.js --output dist/bundle.js --mode development",
+    "build:prod":"webpack src/js/game.js --output dist/bundle.js --mode development -p"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
     "three": "^0.119.1"
   },
   "devDependencies": {
-    "webpack": "^4.44.1"
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }

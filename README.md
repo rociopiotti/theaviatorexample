@@ -3,6 +3,12 @@
   
 This is a Three.js exercise following the tutorial "The Making of 'The Aviator': Animating a Basic 3D Scene with Three.js", by Karim Maaloul.
 
+## My demo
+
+You can see the demo here:
+
+[Demo](https://www.rociopiotti.com/public/webdesign/theaviatorexample/index.html)
+
 I translated the author's comments to spanish.
   
 You can find the tutorial here:
